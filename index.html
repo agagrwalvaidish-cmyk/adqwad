@@ -4,144 +4,279 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TravelX - Tourism App</title>
-<link rel="stylesheet" href="style.css">
+<title>Ultimate Quiz Game</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.quiz-container {
+    background: #ffffff;
+    color: #222;
+    width: 90%;
+    max-width: 550px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px #0008;
+    text-align: center;
+}
+
+h1 {
+    color: #6246ea;
+}
+
+#question {
+    font-size: 21px;
+    margin: 25px 0;
+}
+
+#options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    background: #eeeaff;
+    border-color: #6246ea;
+}
+
+.correct {
+    background: #b8f5c6;
+    border-color: green;
+}
+
+.wrong {
+    background: #ffc6c6;
+    border-color: red;
+}
+
+button {
+    cursor: pointer;
+}
+
+#nextBtn, #restartBtn {
+    background: #6246ea;
+    color: white;
+    border: none;
+    padding: 13px 30px;
+    border-radius: 10px;
+    margin-top: 25px;
+    font-size: 16px;
+}
+
+#nextBtn:hover, #restartBtn:hover {
+    background: #4932bd;
+}
+
+#nextBtn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+#result {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+#progress {
+    color: #777;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-    <h2>🌍 TravelX</h2>
-    <span>Explore the world</span>
-</header>
+<div class="quiz-container">
 
-<main>
+    <h1>🧠 Ultimate Quiz</h1>
 
-    <!-- SCREEN 1: HOME -->
-    <section class="screen active" id="home">
-        <h1>Discover the World ✈️</h1>
-        <p>Your next adventure starts here.</p>
+    <p id="progress">Question 1 of 10</p>
 
-        <input type="text" placeholder="🔍 Search destinations...">
+    <h2 id="question">Loading question...</h2>
 
-        <h2>Popular Destinations</h2>
+    <div id="options"></div>
 
-        <div class="destination">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800">
-            <h3>Beautiful Mountains</h3>
-            <p>Explore nature and adventure.</p>
-        </div>
-
-        <div class="destination">
-            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800">
-            <h3>Tropical Beaches</h3>
-            <p>Relax beside the ocean.</p>
-        </div>
-    </section>
-
-
-    <!-- SCREEN 2: EXPLORE -->
-    <section class="screen" id="explore">
-        <h1>Explore Places 🗺️</h1>
-        <p>Find your dream destination.</p>
-
-        <div class="destination">
-            <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800">
-            <h3>New York, USA</h3>
-            <p>City lights and famous landmarks.</p>
-        </div>
-
-        <div class="destination">
-            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800">
-            <h3>Italy</h3>
-            <p>Beautiful architecture and culture.</p>
-        </div>
-
-        <div class="destination">
-            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800">
-            <h3>Japan</h3>
-            <p>Experience tradition and technology.</p>
-        </div>
-    </section>
-
-
-    <!-- SCREEN 3: BOOKINGS -->
-    <section class="screen" id="booking">
-        <h1>My Bookings 🎫</h1>
-        <p>Plan your next trip.</p>
-
-        <div class="booking-card">
-            <h2>🏨 Hotel Booking</h2>
-            <p>Find comfortable places to stay.</p>
-            <button onclick="alert('Hotel booking demo opened!')">
-                Explore Hotels
-            </button>
-        </div>
-
-        <div class="booking-card">
-            <h2>✈️ Flight Booking</h2>
-            <p>Find flights for your journey.</p>
-            <button onclick="alert('Flight booking demo opened!')">
-                Explore Flights
-            </button>
-        </div>
-
-        <div class="booking-card">
-            <h2>🚆 Train Booking</h2>
-            <p>Explore train travel options.</p>
-            <button onclick="alert('Train booking demo opened!')">
-                Explore Trains
-            </button>
-        </div>
-    </section>
-
-
-    <!-- SCREEN 4: PROFILE -->
-    <section class="screen" id="profile">
-        <h1>My Profile 👤</h1>
-
-        <div class="profile-card">
-            <div class="avatar">👤</div>
-            <h2>Travel Explorer</h2>
-            <p>Welcome to TravelX!</p>
-        </div>
-
-        <div class="booking-card">
-            <h3>❤️ Saved Destinations</h3>
-            <p>Your favourite places will appear here.</p>
-        </div>
-
-        <div class="booking-card">
-            <h3>⚙️ Settings</h3>
-            <p>Manage your app preferences.</p>
-        </div>
-
-        <div class="booking-card">
-            <h3>ℹ️ About TravelX</h3>
-            <p>Explore more. Discover more. Travel more.</p>
-        </div>
-    </section>
-
-</main>
-
-<!-- BOTTOM NAVIGATION -->
-<nav>
-    <button onclick="showScreen('home', this)" class="selected">
-        🏠<small>Home</small>
+    <button id="nextBtn" disabled onclick="nextQuestion()">
+        Next Question →
     </button>
 
-    <button onclick="showScreen('explore', this)">
-        🌍<small>Explore</small>
-    </button>
+    <div id="result"></div>
 
-    <button onclick="showScreen('booking', this)">
-        🎫<small>Booking</small>
-    </button>
+</div>
 
-    <button onclick="showScreen('profile', this)">
-        👤<small>Profile</small>
-    </button>
-</nav>
+<script>
 
-<script src="script.js"></script>
+const questions = [
+    {
+        question: "What is the capital of India?",
+        options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
+        answer: "New Delhi"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Venus", "Mars", "Jupiter"],
+        answer: "Mars"
+    },
+    {
+        question: "How many continents are there?",
+        options: ["5", "6", "7", "8"],
+        answer: "7"
+    },
+    {
+        question: "Who invented the telephone?",
+        options: ["Newton", "Alexander Graham Bell", "Einstein", "Edison"],
+        answer: "Alexander Graham Bell"
+    },
+    {
+        question: "Which is the largest ocean?",
+        options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+        answer: "Pacific"
+    },
+    {
+        question: "What is 12 × 8?",
+        options: ["86", "96", "108", "88"],
+        answer: "96"
+    },
+    {
+        question: "Which gas do plants absorb?",
+        options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+        answer: "Carbon dioxide"
+    },
+    {
+        question: "Which is the fastest land animal?",
+        options: ["Lion", "Horse", "Cheetah", "Tiger"],
+        answer: "Cheetah"
+    },
+    {
+        question: "Which language is used to style websites?",
+        options: ["HTML", "CSS", "Python", "Java"],
+        answer: "CSS"
+    },
+    {
+        question: "How many sides does a hexagon have?",
+        options: ["5", "6", "7", "8"],
+        answer: "6"
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("progress").innerText =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("question").innerText = q.question;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    document.getElementById("result").innerText = "";
+    document.getElementById("nextBtn").disabled = true;
+
+    q.options.forEach(option => {
+
+        const btn = document.createElement("button");
+
+        btn.innerText = option;
+        btn.className = "option";
+
+        btn.onclick = () => checkAnswer(btn, option);
+
+        optionsDiv.appendChild(btn);
+
+    });
+}
+
+function checkAnswer(button, selected) {
+
+    const correct = questions[currentQuestion].answer;
+
+    const allButtons = document.querySelectorAll(".option");
+
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+
+        if (btn.innerText === correct) {
+            btn.classList.add("correct");
+        }
+    });
+
+    if (selected === correct) {
+        score++;
+        document.getElementById("result").innerText = "✅ Correct Answer!";
+    } else {
+        button.classList.add("wrong");
+        document.getElementById("result").innerText =
+            "❌ Incorrect! Correct answer: " + correct;
+    }
+
+    document.getElementById("nextBtn").disabled = false;
+}
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+
+    document.querySelector(".quiz-container").innerHTML = `
+        <h1>🏆 Quiz Completed!</h1>
+        <h2>Your Score</h2>
+        <div id="result">
+            ${score} / ${questions.length}
+        </div>
+        <p>${score >= 8 ? "Amazing Work! 🌟" :
+           score >= 5 ? "Good Job! 👏" :
+           "Keep Practising! 💪"}</p>
+        <button id="restartBtn" onclick="restartQuiz()">
+            Play Again
+        </button>
+    `;
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+
+    location.reload();
+}
+
+loadQuestion();
+
+</script>
+
 </body>
 </html>
