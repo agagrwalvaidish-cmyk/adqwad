@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultimate Quiz Game</title>
+<title>VideoVault - Video Recorder</title>
 
 <style>
 * {
@@ -14,267 +14,321 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: #101525;
     color: white;
 }
 
-.quiz-container {
-    background: #ffffff;
-    color: #222;
-    width: 90%;
-    max-width: 550px;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 35px #0008;
+header {
+    background: #1b2540;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #70d6ff;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+}
+
+.camera-box {
+    background: #1b2540;
+    padding: 20px;
+    border-radius: 15px;
     text-align: center;
 }
 
-h1 {
-    color: #6246ea;
+video {
+    width: 100%;
+    max-height: 430px;
+    background: black;
+    border-radius: 12px;
+    object-fit: contain;
 }
 
-#question {
-    font-size: 21px;
-    margin: 25px 0;
-}
-
-#options {
-    display: grid;
+.controls {
+    margin-top: 20px;
+    display: flex;
     gap: 12px;
-}
-
-.option {
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    background: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.2s;
-}
-
-.option:hover:not(:disabled) {
-    background: #eeeaff;
-    border-color: #6246ea;
-}
-
-.correct {
-    background: #b8f5c6;
-    border-color: green;
-}
-
-.wrong {
-    background: #ffc6c6;
-    border-color: red;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 button {
-    cursor: pointer;
-}
-
-#nextBtn, #restartBtn {
-    background: #6246ea;
-    color: white;
+    padding: 12px 20px;
     border: none;
-    padding: 13px 30px;
-    border-radius: 10px;
-    margin-top: 25px;
-    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
 }
 
-#nextBtn:hover, #restartBtn:hover {
-    background: #4932bd;
+.start {
+    background: #00c781;
+    color: white;
 }
 
-#nextBtn:disabled {
-    background: #aaa;
+.stop {
+    background: #ff4757;
+    color: white;
+}
+
+button:disabled {
+    opacity: 0.45;
     cursor: not-allowed;
 }
 
-#result {
-    font-size: 22px;
-    margin-top: 20px;
+h2 {
+    margin-top: 35px;
 }
 
-#progress {
-    color: #777;
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: #1b2540;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.card video {
+    width: 100%;
+}
+
+.card button {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.delete {
+    background: #ff4757;
+    color: white;
+}
+
+.download {
+    background: #477bff;
+    color: white;
+}
+
+#status {
+    color: #70d6ff;
+    margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="quiz-container">
+<header>🎥 VideoVault</header>
 
-    <h1>🧠 Ultimate Quiz</h1>
+<div class="container">
 
-    <p id="progress">Question 1 of 10</p>
+    <div class="camera-box">
 
-    <h2 id="question">Loading question...</h2>
+        <h2>Record a Video</h2>
 
-    <div id="options"></div>
+        <video id="camera" autoplay muted playsinline></video>
 
-    <button id="nextBtn" disabled onclick="nextQuestion()">
-        Next Question →
-    </button>
+        <div class="controls">
 
-    <div id="result"></div>
+            <button class="start" id="cameraBtn">
+                Open Camera
+            </button>
+
+            <button class="start" id="recordBtn" disabled>
+                ● Start Recording
+            </button>
+
+            <button class="stop" id="stopBtn" disabled>
+                ■ Stop Recording
+            </button>
+
+        </div>
+
+        <p id="status">Camera is not connected.</p>
+
+    </div>
+
+    <h2>📁 My Saved Videos</h2>
+
+    <div class="gallery" id="gallery"></div>
 
 </div>
 
 <script>
 
-const questions = [
-    {
-        question: "What is the capital of India?",
-        options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
-        answer: "New Delhi"
-    },
-    {
-        question: "Which planet is known as the Red Planet?",
-        options: ["Earth", "Venus", "Mars", "Jupiter"],
-        answer: "Mars"
-    },
-    {
-        question: "How many continents are there?",
-        options: ["5", "6", "7", "8"],
-        answer: "7"
-    },
-    {
-        question: "Who invented the telephone?",
-        options: ["Newton", "Alexander Graham Bell", "Einstein", "Edison"],
-        answer: "Alexander Graham Bell"
-    },
-    {
-        question: "Which is the largest ocean?",
-        options: ["Atlantic", "Indian", "Arctic", "Pacific"],
-        answer: "Pacific"
-    },
-    {
-        question: "What is 12 × 8?",
-        options: ["86", "96", "108", "88"],
-        answer: "96"
-    },
-    {
-        question: "Which gas do plants absorb?",
-        options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
-        answer: "Carbon dioxide"
-    },
-    {
-        question: "Which is the fastest land animal?",
-        options: ["Lion", "Horse", "Cheetah", "Tiger"],
-        answer: "Cheetah"
-    },
-    {
-        question: "Which language is used to style websites?",
-        options: ["HTML", "CSS", "Python", "Java"],
-        answer: "CSS"
-    },
-    {
-        question: "How many sides does a hexagon have?",
-        options: ["5", "6", "7", "8"],
-        answer: "6"
+const camera = document.getElementById("camera");
+const cameraBtn = document.getElementById("cameraBtn");
+const recordBtn = document.getElementById("recordBtn");
+const stopBtn = document.getElementById("stopBtn");
+const statusText = document.getElementById("status");
+const gallery = document.getElementById("gallery");
+
+let stream = null;
+let recorder = null;
+let chunks = [];
+
+let videos = [];
+
+cameraBtn.onclick = async () => {
+
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
+
+        camera.srcObject = stream;
+
+        recordBtn.disabled = false;
+        cameraBtn.disabled = true;
+
+        statusText.innerText = "Camera connected! Ready to record.";
+
+    } catch (error) {
+        statusText.innerText =
+            "Camera permission denied or camera unavailable.";
     }
-];
 
-let currentQuestion = 0;
-let score = 0;
+};
 
-function loadQuestion() {
+recordBtn.onclick = () => {
 
-    const q = questions[currentQuestion];
+    chunks = [];
 
-    document.getElementById("progress").innerText =
-        `Question ${currentQuestion + 1} of ${questions.length}`;
+    recorder = new MediaRecorder(stream);
 
-    document.getElementById("question").innerText = q.question;
-
-    const optionsDiv = document.getElementById("options");
-    optionsDiv.innerHTML = "";
-
-    document.getElementById("result").innerText = "";
-    document.getElementById("nextBtn").disabled = true;
-
-    q.options.forEach(option => {
-
-        const btn = document.createElement("button");
-
-        btn.innerText = option;
-        btn.className = "option";
-
-        btn.onclick = () => checkAnswer(btn, option);
-
-        optionsDiv.appendChild(btn);
-
-    });
-}
-
-function checkAnswer(button, selected) {
-
-    const correct = questions[currentQuestion].answer;
-
-    const allButtons = document.querySelectorAll(".option");
-
-    allButtons.forEach(btn => {
-        btn.disabled = true;
-
-        if (btn.innerText === correct) {
-            btn.classList.add("correct");
+    recorder.ondataavailable = event => {
+        if (event.data.size > 0) {
+            chunks.push(event.data);
         }
+    };
+
+    recorder.onstop = () => {
+
+        const blob = new Blob(chunks, {
+            type: recorder.mimeType
+        });
+
+        saveVideo(blob);
+
+        statusText.innerText = "Video saved successfully!";
+
+    };
+
+    recorder.start();
+
+    recordBtn.disabled = true;
+    stopBtn.disabled = false;
+
+    statusText.innerText = "🔴 Recording video...";
+
+};
+
+stopBtn.onclick = () => {
+
+    if (recorder && recorder.state === "recording") {
+        recorder.stop();
+    }
+
+    recordBtn.disabled = false;
+    stopBtn.disabled = true;
+
+};
+
+function saveVideo(blob) {
+
+    const url = URL.createObjectURL(blob);
+
+    const videoData = {
+        id: Date.now(),
+        blob: blob,
+        url: url,
+        name: "Video_" + new Date().toLocaleString()
+    };
+
+    videos.push(videoData);
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        try {
+            const link = document.createElement("a");
+            link.href = reader.result;
+            link.download = "VideoVault_" + videoData.id + ".webm";
+            link.click();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    reader.readAsDataURL(blob);
+
+    showVideos();
+}
+
+function showVideos() {
+
+    gallery.innerHTML = "";
+
+    videos.forEach(video => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        const preview = document.createElement("video");
+        preview.src = video.url;
+        preview.controls = true;
+        preview.playsInline = true;
+
+        const name = document.createElement("p");
+        name.innerText = video.name;
+
+        const downloadBtn = document.createElement("button");
+        downloadBtn.className = "download";
+        downloadBtn.innerText = "⬇ Download";
+
+        downloadBtn.onclick = () => {
+            const link = document.createElement("a");
+            link.href = video.url;
+            link.download = "VideoVault_" + video.id + ".webm";
+            link.click();
+        };
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete";
+        deleteBtn.innerText = "🗑 Delete";
+
+        deleteBtn.onclick = () => {
+
+            URL.revokeObjectURL(video.url);
+
+            videos = videos.filter(v => v.id !== video.id);
+
+            showVideos();
+
+        };
+
+        card.appendChild(preview);
+        card.appendChild(name);
+        card.appendChild(downloadBtn);
+        card.appendChild(deleteBtn);
+
+        gallery.appendChild(card);
+
     });
 
-    if (selected === correct) {
-        score++;
-        document.getElementById("result").innerText = "✅ Correct Answer!";
-    } else {
-        button.classList.add("wrong");
-        document.getElementById("result").innerText =
-            "❌ Incorrect! Correct answer: " + correct;
-    }
-
-    document.getElementById("nextBtn").disabled = false;
 }
 
-function nextQuestion() {
-
-    currentQuestion++;
-
-    if (currentQuestion < questions.length) {
-        loadQuestion();
-    } else {
-        showResult();
-    }
-}
-
-function showResult() {
-
-    document.querySelector(".quiz-container").innerHTML = `
-        <h1>🏆 Quiz Completed!</h1>
-        <h2>Your Score</h2>
-        <div id="result">
-            ${score} / ${questions.length}
-        </div>
-        <p>${score >= 8 ? "Amazing Work! 🌟" :
-           score >= 5 ? "Good Job! 👏" :
-           "Keep Practising! 💪"}</p>
-        <button id="restartBtn" onclick="restartQuiz()">
-            Play Again
-        </button>
-    `;
-}
-
-function restartQuiz() {
-    currentQuestion = 0;
-    score = 0;
-
-    location.reload();
-}
-
-loadQuestion();
+window.addEventListener("beforeunload", () => {
+    stream?.getTracks().forEach(track => track.stop());
+});
 
 </script>
 
