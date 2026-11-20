@@ -2,27 +2,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocean Explorer 3D</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravelX - Tourism App</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="hud">
-        <h1>🌊 OCEAN EXPLORER</h1>
-        <p>🐚 Treasures: <span id="score">0</span></p>
-        <p>🫧 Oxygen: <span id="oxygen">100</span>%</p>
-        <p id="message">Explore the ocean!</p>
-    </div>
+<header>
+    <h2>🌍 TravelX</h2>
+    <span>Explore the world</span>
+</header>
 
-    <div id="start">
-        <h1>OCEAN EXPLORER</h1>
-        <p>Discover the mysteries of the deep sea.</p>
-        <button id="play">START EXPLORING</button>
-        <p>WASD = Move | Mouse = Look around</p>
-    </div>
+<main>
 
-    <script type="module" src="game.js"></script>
+    <!-- SCREEN 1: HOME -->
+    <section class="screen active" id="home">
+        <h1>Discover the World ✈️</h1>
+        <p>Your next adventure starts here.</p>
+
+        <input type="text" placeholder="🔍 Search destinations...">
+
+        <h2>Popular Destinations</h2>
+
+        <div class="destination">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800">
+            <h3>Beautiful Mountains</h3>
+            <p>Explore nature and adventure.</p>
+        </div>
+
+        <div class="destination">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800">
+            <h3>Tropical Beaches</h3>
+            <p>Relax beside the ocean.</p>
+        </div>
+    </section>
+
+
+    <!-- SCREEN 2: EXPLORE -->
+    <section class="screen" id="explore">
+        <h1>Explore Places 🗺️</h1>
+        <p>Find your dream destination.</p>
+
+        <div class="destination">
+            <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800">
+            <h3>New York, USA</h3>
+            <p>City lights and famous landmarks.</p>
+        </div>
+
+        <div class="destination">
+            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800">
+            <h3>Italy</h3>
+            <p>Beautiful architecture and culture.</p>
+        </div>
+
+        <div class="destination">
+            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800">
+            <h3>Japan</h3>
+            <p>Experience tradition and technology.</p>
+        </div>
+    </section>
+
+
+    <!-- SCREEN 3: BOOKINGS -->
+    <section class="screen" id="booking">
+        <h1>My Bookings 🎫</h1>
+        <p>Plan your next trip.</p>
+
+        <div class="booking-card">
+            <h2>🏨 Hotel Booking</h2>
+            <p>Find comfortable places to stay.</p>
+            <button onclick="alert('Hotel booking demo opened!')">
+                Explore Hotels
+            </button>
+        </div>
+
+        <div class="booking-card">
+            <h2>✈️ Flight Booking</h2>
+            <p>Find flights for your journey.</p>
+            <button onclick="alert('Flight booking demo opened!')">
+                Explore Flights
+            </button>
+        </div>
+
+        <div class="booking-card">
+            <h2>🚆 Train Booking</h2>
+            <p>Explore train travel options.</p>
+            <button onclick="alert('Train booking demo opened!')">
+                Explore Trains
+            </button>
+        </div>
+    </section>
+
+
+    <!-- SCREEN 4: PROFILE -->
+    <section class="screen" id="profile">
+        <h1>My Profile 👤</h1>
+
+        <div class="profile-card">
+            <div class="avatar">👤</div>
+            <h2>Travel Explorer</h2>
+            <p>Welcome to TravelX!</p>
+        </div>
+
+        <div class="booking-card">
+            <h3>❤️ Saved Destinations</h3>
+            <p>Your favourite places will appear here.</p>
+        </div>
+
+        <div class="booking-card">
+            <h3>⚙️ Settings</h3>
+            <p>Manage your app preferences.</p>
+        </div>
+
+        <div class="booking-card">
+            <h3>ℹ️ About TravelX</h3>
+            <p>Explore more. Discover more. Travel more.</p>
+        </div>
+    </section>
+
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav>
+    <button onclick="showScreen('home', this)" class="selected">
+        🏠<small>Home</small>
+    </button>
+
+    <button onclick="showScreen('explore', this)">
+        🌍<small>Explore</small>
+    </button>
+
+    <button onclick="showScreen('booking', this)">
+        🎫<small>Booking</small>
+    </button>
+
+    <button onclick="showScreen('profile', this)">
+        👤<small>Profile</small>
+    </button>
+</nav>
+
+<script src="script.js"></script>
 </body>
 </html>
